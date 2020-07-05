@@ -20,7 +20,9 @@
         <i class="material-icons delete" @click="deleteIng(ing)">delete</i>
       </div>
       <div class="field add-ingredient">
-        <label for="add-ingredient">Add an ingredient: </label>
+        <label for="add-ingredient"
+          >Add an ingredient <span class="red-text">(type, then tab)</span>:
+        </label>
         <input
           type="text"
           name="add-ingredient"

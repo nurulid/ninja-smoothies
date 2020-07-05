@@ -13,7 +13,12 @@
         </ul>
       </div>
       <span class="btn-floating btn-large halfway-fab pink">
-        <router-link :to="{name: 'EditSmoothie', params: {smoothie_slug: smoothie.slug}}">
+        <router-link
+          :to="{
+            name: 'EditSmoothie',
+            params: { smoothie_slug: smoothie.slug }
+          }"
+        >
           <i class="material-icons edit">edit</i>
         </router-link>
       </span>
@@ -39,14 +44,16 @@ export default {
     deleteSmoothie(id) {
       // console.log(id);
       // delete doc from database
-      db.collection("smoothies")
-        .doc(id)
-        .delete();
       this.$confirm("Are you sure?")
         .then(() => {
-          this.smoothies = this.smoothies.filter(smoothie => {
-            return smoothie.id != id;
-          });
+          db.collection("smoothies")
+            .doc(id)
+            .delete()
+            .then(() => {
+              this.smoothies = this.smoothies.filter(smoothie => {
+                return smoothie.id != id;
+              });
+            });
         })
         .catch(() => {
           // console.log("Clicked on cancel");
