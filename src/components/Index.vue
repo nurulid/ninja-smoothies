@@ -12,12 +12,22 @@
           </li>
         </ul>
       </div>
+      <span class="btn-floating btn-large halfway-fab pink">
+        <router-link :to="{name: 'EditSmoothie', params: {smoothie_slug: smoothie.slug}}">
+          <i class="material-icons edit">edit</i>
+        </router-link>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
 import db from "@/firebase/init";
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert);
+
 export default {
   name: "Index",
   data() {
@@ -31,11 +41,15 @@ export default {
       // delete doc from database
       db.collection("smoothies")
         .doc(id)
-        .delete()
+        .delete();
+      this.$confirm("Are you sure?")
         .then(() => {
           this.smoothies = this.smoothies.filter(smoothie => {
             return smoothie.id != id;
           });
+        })
+        .catch(() => {
+          // console.log("Clicked on cancel");
         });
     }
   },
