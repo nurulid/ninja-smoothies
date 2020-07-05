@@ -29,8 +29,12 @@
 </template>
 
 <script>
+import Vue from "vue";
 import db from "@/firebase/init";
 import slugify from "slugify";
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert);
 
 export default {
   name: "AddSmoothie",
@@ -82,9 +86,15 @@ export default {
       }
     },
     deleteIng(ing) {
-      this.ingredients = this.ingredients.filter(ingredient => {
-        return ingredient != ing;
-      });
+      this.$confirm("Are you sure?")
+        .then(() => {
+          this.ingredients = this.ingredients.filter(ingredient => {
+            return ingredient != ing;
+          });
+        })
+        .catch(() => {
+          // console.log("Clicked on cancel");
+        });
     }
   }
 };
